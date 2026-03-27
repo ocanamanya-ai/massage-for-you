@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message for you</title>
+    <style>
+        /* Ini CSS-nya tutor TikTok itu, udah gue gabung */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; background: whitesmoke; 
+            font-family: Verdana, Geneva, Tahoma, sans-serif; 
+            overflow: hidden; /* Biar tombol gak bikin scrollbar */
+        }
+        .wrapper { text-align: center; }
+        .gif { width: 100%; max-width: 250px; border-radius: 20px; margin-bottom: 20px; }
+        h2 { text-align: center; font-size: 1.5em; color: #e94d58; margin: 15px 0; }
+        .btn-group { 
+            width: 100%; height: 50px; display: flex; 
+            justify-content: center; margin-top: 30px; position: relative;
+            align-items: center;
+        }
+        button { 
+            position: absolute; width: 130px; height: 50px; 
+            color: white; font-size: 1.2em; border-radius: 25px; 
+            outline: none; cursor: pointer; border: 2px solid #e94d58; 
+            transition: 0.1s; z-index: 10;
+        }
+        /* Tombol Yes */
+        button:nth-child(1) { background: #e94d58; transform: translateX(-80px); }
+        /* Tombol No */
+        button:nth-child(2) { background: white; color: #e94d58; transform: translateX(80px); }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <h2 class="question">You like me?</h2>
+        <img class="gif" id="gif-cat" alt="gif" src="https://raw.githubusercontent.com/DzarelDeveloper/Img/main/gifyou.webp">
+        
+        <div class="btn-group">
+            <button class="yes-btn">Yes</button>
+            <button class="no-btn">No</button>
+        </div>
+    </div>
+
+    <script>
+    const question = document.querySelector(".question");
+    const gif = document.getElementById("gif-cat");
+    const yesBtn = document.querySelector(".yes-btn");
+    const noBtn = document.querySelector(".no-btn");
+
+    // Fungsi Jurus Ngetik Otomatis
+    function mulaiNgetik(elemen, teks) {
+        elemen.innerHTML = "";
+        let i = 0;
+        let speed = 100; // Kecepatan ngetik (ms)
+        function type() {
+            if (i < teks.length) {
+                elemen.innerHTML += teks.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        type();
+    }
+
+    // Pas klik YES
+    yesBtn.addEventListener("click", () => {
+        // Ganti gambar kucing ciuman
+        gif.src = "https://raw.githubusercontent.com/DzarelDeveloper/Img/main/gif.webp";
+        // Sembunyiin tombol
+        yesBtn.style.display = 'none';
+        noBtn.style.display = 'none';
+        // Jalankan efek ngetik (Ganti teksnya sesuka lo!)
+        mulaiNgetik(question, "Aaaaa, I knew it! You like me too! ❤️✨");
+    });
+
+    // Jurus Kabur (Tetep sama biar licin)
+    function kabur() {
+        const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+        const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+        noBtn.style.zIndex = '9999';
+    }
+
+    noBtn.addEventListener("mouseover", kabur);
+    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); kabur(); });
+</script>
+</body>
+</html>
